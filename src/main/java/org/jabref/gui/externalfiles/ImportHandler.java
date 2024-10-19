@@ -51,7 +51,7 @@ import org.jabref.model.entry.field.StandardField;
 import org.jabref.model.entry.identifier.ArXivIdentifier;
 import org.jabref.model.entry.identifier.DOI;
 import org.jabref.model.entry.identifier.ISBN;
-import org.jabref.model.entry.identifier.SSRNIdentifier;
+import org.jabref.model.entry.identifier.SSRN;
 import org.jabref.model.groups.GroupEntryChanger;
 import org.jabref.model.groups.GroupTreeNode;
 import org.jabref.model.util.FileUpdateMonitor;
@@ -374,8 +374,9 @@ public class ImportHandler {
             return fetchByISBN(isbn.get());
         }
 
-        Optional<SSRNIdentifier> ssrn = SSRNIdentifier.findInText(data);
+        Optional<SSRN> ssrn = SSRN.findInText(data);
         if (ssrn.isPresent()) {
+            LOGGER.info("Using SSRN to determine DOI");
             return fetchByDOI(new DOI(ssrn.get().intoDoi()));
         }
 
